@@ -1,0 +1,5 @@
+
+  :host {
+    height: 100% !important;/* Garante que o HTML e o body ocupem 100% da altura */
+    margin: 0; /* Remove margens padrão */
+  }
