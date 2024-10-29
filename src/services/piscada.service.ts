@@ -86,6 +86,7 @@ export class BlinkService {
     
     const soma = this.alturasRegistradas.reduce((acc, altura) => acc + altura, 0);
     const mediaCalculada = (this.alturasRegistradas.length > 0 ? soma / this.alturasRegistradas.length : 0) / 3;
+    console.log('mediaCalculada',mediaCalculada)
 
     // Formata a média para duas casas decimais
     this.mediaAltura = parseFloat(mediaCalculada.toFixed(3));
@@ -104,6 +105,7 @@ export class BlinkService {
           if (this.multiFaceLandmarks) {
             for (const landmarks of this.multiFaceLandmarks) {
               const alturaAtual = this.calcularTamanhoOlho(landmarks);
+              console.log('alturaAtual',alturaAtual)
               if (alturaAtual && this.detectBlink(alturaAtual)) {
                 piscadasContadas++;
               }

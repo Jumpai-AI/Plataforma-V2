@@ -3,6 +3,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { BlinkService } from '../../../services/piscada.service';
 import { MatIcon } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calibragem-olho',
@@ -22,7 +23,7 @@ export class CalibragemOlhoComponent {
 
   @ViewChild('videoElement', { static: true }) videoElement!: ElementRef<HTMLVideoElement>; 
 
-  constructor(private blinkService: BlinkService) { 
+  constructor(private blinkService: BlinkService, private router: Router) { 
     this.blinkService.piscadaDetectada.subscribe(() => {
       this.circuloCor = 'verde';
       setTimeout(() => {
@@ -61,7 +62,10 @@ export class CalibragemOlhoComponent {
     this.blinkService.iniciarTestePiscadas(this.videoElement.nativeElement)
       .then(() => {
         this.calibragemStatus = 'S';
-        this.testando = false;      
+        this.testando = false;
+        setInterval(() => {
+          this.router.navigate(['/jogos']);
+        }, 2000);
       })
       .catch((error) => {
         this.calibragemStatus = 'E';
