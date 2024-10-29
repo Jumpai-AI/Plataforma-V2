@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormasComponent } from "../../componentes/formas/formas.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-controle',
@@ -10,8 +11,10 @@ import { FormasComponent } from "../../componentes/formas/formas.component";
 })
 export class ControleComponent {
 
-  controleOcular():void{
+  constructor(private router: Router) {}
 
+  controleOcular():void{
+    this.router.navigate(['/calibragem-olho']);
   }
 
   controleLuva():void{

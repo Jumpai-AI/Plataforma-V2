@@ -1,0 +1,32 @@
+//Cores
+
+$branco: #f1f1f1;
+$roxo: #552CB7; 
+$amarelo: #FFE662; 
+$verde: #32CD32; 
+
+//Widths
+.W-50{
+    width: 50% !important;
+}
+
+.W-25{
+    width: 25% !important;
+}
+
+//Botoes
+.bnt-branco-roxo{
+    background-color: $branco !important;
+    color:$roxo  !important
+}
+
+.bnt-amarelo-roxo{
+    background-color: $amarelo !important;
+    color:$roxo  !important
+}
+
+//backgrounds
+
+.bg-branco{
+    background-color: $branco !important;
+}

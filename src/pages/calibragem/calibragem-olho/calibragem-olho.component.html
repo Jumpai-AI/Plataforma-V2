@@ -1,0 +1,39 @@
+<video #videoElement style="display: none;"></video>
+
+<div class="container" *ngIf="!calibrando && !testando && !calibrageFinalizada">
+    <p>
+        Para usar o controle ocular é necessário identificar o tamanho do seu olho. 
+        Quando estiver pronto, olhe fixamente para o ponto branco. Não deixe seu olho aberto demais ou muito fechado, apenas olhe normalmente.
+        <strong>Esta etapa é muito importante.</strong>
+    </p>
+    <button mat-raised-button class="W-25 bnt-amarelo-roxo" (click)="iniciarCalibragem()">Estou Pronto</button>      
+</div>
+
+<div *ngIf="calibrando" class="container">
+    <div class="ponto-branco"></div>
+    <p> Restante {{ tempoRestante }} segundos</p>
+</div>
+
+<div class="container" *ngIf="!calibrando && calibrageFinalizada && !testando && calibragemStatus === ''">
+    <p>
+        Seu processo de calibragem ocorreu com sucesso! Agora é hora de testar, vão aparecer 3 círculos brancos. Conforme eles forem fechando, pisque.
+    </p>
+    <button mat-raised-button class="W-25 bnt-amarelo-roxo" (click)="iniciarTeste()">Estou Pronto</button>      
+</div>
+
+<div class="container" *ngIf="testando">
+    <div [ngClass]="['circulo-animado', circuloCor]"></div>
+    <p>Testando...</p>
+</div>
+
+<div class="container" *ngIf="calibragemStatus === 'S'">
+    <mat-icon>check_circle_outline</mat-icon>
+    <p> Tudo ocorreu perfeitamente! Seja bem-vindo ao JumpAI, um jogo desenvolvido para você! Pensando em você!</p>
+</div>
+
+
+<div class="container" *ngIf="calibragemStatus === 'E'">
+    <mat-icon>error_outline</mat-icon>
+    <p> Sua calibragem deu erro, lamento! Clique no Botão para realizar o processo novamente!</p>
+    <button mat-raised-button class="W-25 bnt-amarelo-roxo" (click)="iniciarCalibragem()">Estou Pronto</button>      
+</div>

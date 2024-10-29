@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BlinkService } from '../../services/blink.service';
+import { BlinkService } from '../../services/piscada.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import interact from 'interactjs';
@@ -32,12 +32,12 @@ export class CameraComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => {
-        this.blinkService.initializeFaceMesh(this.videoElement.nativeElement, this.canvasElement.nativeElement)
-          .catch((error) => console.error("Erro ao inicializar FaceMesh:", error));
-      }, 0);
-    }
+    // if (isPlatformBrowser(this.platformId)) {
+    //   setTimeout(() => {
+    //     this.blinkService.initializeFaceMesh(this.videoElement.nativeElement, this.canvasElement.nativeElement)
+    //       .catch((error) => console.error("Erro ao inicializar FaceMesh:", error));
+    //   }, 0);
+    // }
 
     // Configurar o Interact.js
     interact(this.containerCamera.nativeElement)

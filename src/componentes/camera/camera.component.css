@@ -7,7 +7,7 @@
     z-index: 9999; 
     cursor: move;
     border-radius: 15px; 
-    border: 4px solid #f1f1f1; 
+    border: 4px solid branco; 
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
     overflow: hidden;
 }

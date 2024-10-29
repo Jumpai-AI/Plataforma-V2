@@ -1,3 +1,5 @@
+@import '../../styles.scss';
+
 .container {
     display: flex;
     justify-content: center;
@@ -11,7 +13,7 @@
     flex: 1 1 200px;
     max-width: 20%;
     aspect-ratio: 1;
-    background-color: #f1f1f1;
+    background-color: $branco;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,13 +31,13 @@
 
 .opcao-controle:hover {
     transform: scale(1.1);
-    background-color: #FFE662;
+    background-color: $amarelo;
 }
   
 .header {
     padding: 1rem 2rem;
     text-align: left;
-    color: #FFE662;
+    color:  $amarelo;
   
     h1 {
       font-weight: bold;
@@ -43,7 +45,7 @@
     }
   
     p {
-      color: #f1f1f1;
+      color:  $branco;
       width: 45%;
       font-size: 1.5rem;
     }
