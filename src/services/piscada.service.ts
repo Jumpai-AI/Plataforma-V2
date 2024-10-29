@@ -74,7 +74,6 @@ export class BlinkService {
       await new Promise(resolve => setTimeout(resolve, intervalo));
     }
 
-    console.log('this.multiFaceLandmarks', this.multiFaceLandmarks)
     // Processa os landmarks armazenados
     if (this.multiFaceLandmarks) {
       for (const landmarks of this.multiFaceLandmarks) {
@@ -86,10 +85,7 @@ export class BlinkService {
     }
     
     const soma = this.alturasRegistradas.reduce((acc, altura) => acc + altura, 0);
-    console.log('soma',soma)
-
-    const mediaCalculada = (this.alturasRegistradas.length > 0 ? soma / this.alturasRegistradas.length : 0) / 3;
-    console.log('mediaCalculada',mediaCalculada)
+    const mediaCalculada = (this.alturasRegistradas.length > 0 ? soma / this.alturasRegistradas.length : 0) / 2;
 
     // Formata a média para duas casas decimais
     this.mediaAltura = parseFloat(mediaCalculada.toFixed(3));
@@ -108,7 +104,6 @@ export class BlinkService {
           if (this.multiFaceLandmarks) {
             for (const landmarks of this.multiFaceLandmarks) {
               const alturaAtual = this.calcularTamanhoOlho(landmarks);
-              console.log('alturaAtual',alturaAtual)
               if (alturaAtual && this.detectBlink(alturaAtual)) {
                 piscadasContadas++;
               }
