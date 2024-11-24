@@ -5,24 +5,35 @@
     justify-content: center;
     align-items: center;
     height: 70% !important;
-    gap: 2rem;
+    gap: 1.5rem;
+
+    h2{
+        font-size: 120%;
+    }
+
+    p{
+        font-size: 90%;
+        padding: 2%;
+    }
 }
 
 .opcao-controle {
     z-index: 2; 
     flex: 1 1 200px;
     max-width: 20%;
+    height: 100%;
     aspect-ratio: 1.15 / 1.5;
     flex-direction: column;  
     justify-content: space-around; 
     background-color: $branco;
     display: flex;
-    padding: 15px;
+    padding: 1%;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
+    border-radius: 15px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    text-align: center;
 
     &:hover {
         transform: scale(1.1);
@@ -50,8 +61,8 @@
 
 .opcao-controle img {
     width: 95%;
-    border-radius: 10px;
     height: auto;
+    border-radius: 15px;
     object-fit: contain; 
 }
   
@@ -60,15 +71,15 @@
     text-align: left;
     color:  $amarelo;
   
-    h1 {
+    /*h1 {
       font-weight: bold;
       margin-bottom: 0.5rem;
-    }
+    }*/
   
     p {
       color:  $branco;
       width: 45%;
-      font-size: 1.5rem;
+      font-size: 150%;
     }
 }
 
