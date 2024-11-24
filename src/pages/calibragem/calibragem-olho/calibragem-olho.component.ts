@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnDestroy, inject } from '@angular/core';
 import { BlinkService } from '../../../services/piscada.service';
 import { Router } from '@angular/router';
 import { SharedModule } from '../../../app/shared/shared.module';
@@ -12,6 +12,10 @@ import { SharedModule } from '../../../app/shared/shared.module';
   styleUrls: ['./calibragem-olho.component.scss']
 })
 export class CalibragemOlhoComponent implements OnDestroy {
+
+  private _blinkService = inject(BlinkService);
+  private _router = inject(Router);
+
   tempoRestante: number = 8; 
   contagem: any;
   calibrando = false;
@@ -25,8 +29,8 @@ export class CalibragemOlhoComponent implements OnDestroy {
   // Assinatura da piscada
   private blinkSubscription: any;
 
-  constructor(private blinkService: BlinkService, private router: Router) { 
-    this.blinkSubscription = this.blinkService.piscadaDetectada.subscribe(() => {
+  constructor() { 
+    this.blinkSubscription = this._blinkService.piscadaDetectada.subscribe(() => {
       this.circuloCor = 'verde';
       setTimeout(() => {
         this.circuloCor = 'branco';
@@ -39,7 +43,7 @@ export class CalibragemOlhoComponent implements OnDestroy {
     this.calibragemStatus = '';
     this.tempoRestante = 8; 
 
-    this.blinkService.registrarAlturasDosOlhos(this.videoElement.nativeElement)
+    this._blinkService.registrarAlturasDosOlhos(this.videoElement.nativeElement)
       .then(() => {
         clearInterval(this.contagem);
         this.calibrando = false; 
@@ -61,11 +65,11 @@ export class CalibragemOlhoComponent implements OnDestroy {
 
   iniciarTeste() {
     this.testando = true; 
-    this.blinkService.iniciarTestePiscadas(this.videoElement.nativeElement)
+    this._blinkService.iniciarTestePiscadas(this.videoElement.nativeElement)
       .then(() => {
         this.calibragemStatus = 'S';
         this.testando = false;
-        this.router.navigate(['/jogos', 'ocular']);
+        this._router.navigate(['/jogos', 'ocular']);
       })
       .catch((error) => {
         this.calibragemStatus = 'E';

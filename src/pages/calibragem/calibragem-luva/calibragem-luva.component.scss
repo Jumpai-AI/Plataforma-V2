@@ -1,0 +1,33 @@
+@import '../../../styles.scss';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100% !important; 
+    text-align: center;
+
+    p{
+        width: 70%;
+        font-size: 1.5rem;
+        color: $branco
+    }
+    
+}
+
+/* Container para centralizar a barra de progresso */
+.progress-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;   
+    margin: 0;
+}
+  
+/* Estilo para a barra de progresso */
+.custom-progress-bar {
+    height: 20px;         
+    width: 80%;             
+    border-radius: 10px;    
+}

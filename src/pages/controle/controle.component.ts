@@ -25,7 +25,7 @@ export class ControleComponent implements OnInit {
   }
 
   controleLuva():void{
-    
+    this._router.navigate(['/calibragem-luva']);
   }
   
   controleTeclado():void{

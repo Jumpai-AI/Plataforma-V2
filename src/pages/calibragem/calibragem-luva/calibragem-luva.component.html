@@ -1,0 +1,28 @@
+
+<div class="container" *ngIf="!calibrando && !testando && !calibrageFinalizada">
+    <p>
+        Para usar o controle manual é necessário calibrar a luva para seus movimentos. 
+        Quando estiver pronto, comece a movimentar seu dedo para cima e para baixo.
+        Não precisa movimentar muito e nem pouco, faça movimentos naturais e continuos.
+        <strong>Esta etapa é muito importante.</strong>
+    </p>
+    <button mat-raised-button class="W-25 bnt-amarelo-roxo" (click)="iniciarCalibragem()">Estou Pronto</button>      
+</div>
+
+<div *ngIf="calibrando" class="container">
+    <div class="progress-container">
+        <mat-progress-bar
+          mode="determinate"
+          [value]="progressValue"
+          color="accent"
+          class="custom-progress-bar">
+        </mat-progress-bar>
+    </div>
+    <p>Identificando movimentos...</p>
+
+</div>
+
+<div class="container" *ngIf="calibragemStatus === 'S'">
+    <mat-icon>check_circle_outline</mat-icon>
+    <p> Tudo ocorreu perfeitamente! Seja bem-vindo ao JumpAI, um jogo desenvolvido para você! Pensando em você!</p>
+</div>

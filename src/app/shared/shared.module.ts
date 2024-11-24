@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [],
@@ -15,6 +16,7 @@ import { MatCardModule } from '@angular/material/card';
     MatToolbarModule,
     MatIconModule,
     MatCardModule,
+    MatProgressBarModule
   ],
   exports: [
     MatButtonModule,
@@ -22,7 +24,7 @@ import { MatCardModule } from '@angular/material/card';
     MatToolbarModule,
     MatIconModule,
     MatCardModule,
-    // Exporte os módulos aqui para disponibilizá-los
+    MatProgressBarModule
   ]
 })
 export class SharedModule { }
