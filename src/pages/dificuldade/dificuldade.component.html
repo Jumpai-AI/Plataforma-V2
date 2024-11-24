@@ -3,16 +3,16 @@
 </div>
 
 <div class="container">
-  <div class="opcao-controle" [class.selected]="selectedCardIndex === 0" (click)="facil()">
+  <div class="opcao-controle facil" [class.selected-facil]="selectedCardIndex === 0" (click)="facil()">
       <img src="../../assets/image/dificuldade/facil.png" alt="Fase Fácil">
   </div>
-  <div class="opcao-controle" [class.selected]="selectedCardIndex === 1" (click)="medio()">
+  <div class="opcao-controle medio" [class.selected-medio]="selectedCardIndex === 1" (click)="medio()">
       <img src="../../assets/image/dificuldade/medio.png" alt="Fase Médio">
   </div>
-  <div class="opcao-controle" [class.selected]="selectedCardIndex === 2" (click)="dificil()">
+  <div class="opcao-controle dificil" [class.selected-dificil]="selectedCardIndex === 2" (click)="dificil()">
       <img src="../../assets/image/dificuldade/dificil.png" alt="Fase difícil">
   </div>
-  <div class="opcao-controle" [class.selected]="selectedCardIndex === 3" (click)="desafio()">
+  <div class="opcao-controle desafio" [class.selected-desafio]="selectedCardIndex === 3" (click)="desafio()">
     <img src="../../assets/image/dificuldade/desafio.png" alt="Fase Desafio">
 </div>
 </div>

@@ -21,17 +21,29 @@
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 
-    &:hover {
-        transform: scale(1.1);
-        background-color: $amarelo;
-    }
-
-    &.selected {
+    &.selected-facil {
         transform: scale(1.05);
-        background-color: $amarelo;
+        background-color: $verde;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
+    &.selected-medio {
+        transform: scale(1.05);
+        background-color: $laranja;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    &.selected-dificil {
+        transform: scale(1.05);
+        background-color: $vermelho;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    &.selected-desafio {
+        transform: scale(1.05);
+        background-color: $azul;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
 }
 
 .opcao-controle img {
@@ -39,20 +51,45 @@
     height: auto;
     object-fit: contain; 
 }
-  
+
+// Hover para cada caso de dificuldade
+.facil:hover {
+    transform: scale(1.05);
+    background-color: $verde;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.medio:hover {
+    transform: scale(1.05);
+    background-color: $laranja;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dificil:hover {
+    transform: scale(1.05);
+    background-color: $vermelho;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.desafio:hover {
+    transform: scale(1.05);
+    background-color: $azul;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
 .header {
     padding: 1rem 2rem;
     text-align: left;
-    color:  $amarelo;
+    color: $amarelo;
   
     h1 {
-      font-weight: bold;
-      margin-bottom: 0.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
     }
   
     p {
-      color: $branco;
-      width: 45%;
-      font-size: 1.5rem;
+        color: $branco;
+        width: 45%;
+        font-size: 1.5rem;
     }
 }
