@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { ControleService } from './controle.service'; 
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,6 @@ export class BlinkService {
   private camera: any;
 
   alturasRegistradas: number[] = [];
-  mediaAltura: number | 0 = 0; 
   piscadaRegistrada = false;
   public piscadaDetectada = new EventEmitter<void>();
   private multiFaceLandmarks: any[] | null = null; // Propriedade para armazenar landmarks
@@ -16,8 +16,8 @@ export class BlinkService {
   constructor() {}
 
   public async initializeFaceMesh(videoElement: HTMLVideoElement): Promise<void> {
+
     if (this.faceMesh) {
-      // Se já houver uma instância, pare a câmera
       this.camera.stop();
       this.faceMesh.close();
     }
@@ -29,10 +29,12 @@ export class BlinkService {
       return;
     }
   
+    // Criar instância do FaceMesh
     this.faceMesh = new FaceMesh({
       locateFile: (file: string) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
     });
   
+    // Configuração do FaceMesh
     this.faceMesh.setOptions({
       maxNumFaces: 1,
       refineLandmarks: true,
@@ -40,29 +42,35 @@ export class BlinkService {
       minTrackingConfidence: 0.8
     });
   
-    // Inicializa a câmera aqui
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    videoElement.srcObject = stream;
+    // Inicializa a câmera de maneira assíncrona
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      videoElement.srcObject = stream;
   
-    this.camera = new (window as any).Camera(videoElement, {
-      onFrame: async () => {
-        await this.faceMesh.send({ image: videoElement });
-      }
-    });
+      // Usando requestAnimationFrame para não bloquear a renderização
+      setTimeout(() => {
+        this.camera = new (window as any).Camera(videoElement, {
+          onFrame: async () => {
+            await this.faceMesh.send({ image: videoElement });
+          }
+        });
+        this.camera.start();
+      }, 0); // Enviar a inicialização para o próximo ciclo de execução
   
-    this.camera.start();
+      // Registra callback para processar os resultados
+      this.faceMesh.onResults((results: any) => {
+        if (results && results.multiFaceLandmarks) {
+          this.multiFaceLandmarks = results.multiFaceLandmarks; // Armazena os resultados globalmente
+        } else {
+          console.warn('Resultados não encontrados ou vazios:', results);
+        }
+      });
   
-    // Registra callback para processar resultados
-    this.faceMesh.onResults((results: any) => {
-      if (results && results.multiFaceLandmarks) {
-        this.multiFaceLandmarks = results.multiFaceLandmarks; // Armazena os resultados globalmente
-      } else {
-        console.warn('Resultados não encontrados ou vazios:', results);
-      }
-    });
+    } catch (error) {
+      console.error("Erro ao configurar a câmera:", error);
+    }
   }
   
-
   public async registrarAlturasDosOlhos(videoElement: HTMLVideoElement): Promise<void> {
     const tempoLimite = 8000; 
     const intervalo = 150; 
@@ -84,11 +92,12 @@ export class BlinkService {
       }
     }
     
+    // Calcula a média das alturas registradas
     const soma = this.alturasRegistradas.reduce((acc, altura) => acc + altura, 0);
-    const mediaCalculada = (this.alturasRegistradas.length > 0 ? soma / this.alturasRegistradas.length : 0) / 2;
+    const mediaCalculada = (this.alturasRegistradas.length > 0 ? soma / this.alturasRegistradas.length : 0) / 4;
 
-    // Formata a média para duas casas decimais
-    this.mediaAltura = parseFloat(mediaCalculada.toFixed(3));
+    // Atualiza a variável global em ControleService
+    ControleService.atualizarValorMedioCalibragem(parseFloat(mediaCalculada.toFixed(3)));
   }
 
   public async iniciarTestePiscadas(videoElement: HTMLVideoElement): Promise<void> {
@@ -125,7 +134,6 @@ export class BlinkService {
   
     console.log('Sucesso! Duas ou mais piscadas registradas em cada teste.', piscadasContadasTotal);
   }
-    
 
   private calcularTamanhoOlho(landmarks: any[]): number | null {
     if (!landmarks || landmarks.length === 0) {
@@ -135,23 +143,34 @@ export class BlinkService {
     const leftEyeTop = landmarks[159]; 
     const leftEyeBottom = landmarks[145]; 
 
+    const rightEyeTop = landmarks[386];
+    const rightEyeBottom = landmarks[374];  
+
     const leftEyeTopY = leftEyeTop.y; 
     const leftEyeBottomY = leftEyeBottom.y; 
+    const rightEyeTopY = rightEyeTop.y; 
+    const rightEyeBottomY = rightEyeBottom.y; 
 
-    return leftEyeBottomY - leftEyeTopY; 
+    const media = (leftEyeBottomY - leftEyeTopY) + (rightEyeBottomY - rightEyeTopY)
+    return media; 
   }
 
   public detectBlink(currentEyeHeight: number): boolean {
-    if (currentEyeHeight < this.mediaAltura && !this.piscadaRegistrada) {
+
+    // Usando o valor de calibragem global de ControleService
+    const valorMedioCalibragem = ControleService.valorMedioCalibragem;
+
+    if (currentEyeHeight < valorMedioCalibragem && !this.piscadaRegistrada) {
       this.piscadaRegistrada = true;
       this.piscadaDetectada.emit();
       return true;
     }
 
-    if (currentEyeHeight >= this.mediaAltura && this.piscadaRegistrada) {
+    if (currentEyeHeight >= valorMedioCalibragem && this.piscadaRegistrada) {
       this.piscadaRegistrada = false;
     }
 
     return false;
   }
+
 }

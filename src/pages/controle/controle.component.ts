@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormasComponent } from "../../componentes/formas/formas.component";
 import { Router } from '@angular/router';
+import { ControleService } from '../../services/controle.service';
 
 @Component({
   selector: 'app-controle',
@@ -9,12 +10,18 @@ import { Router } from '@angular/router';
   templateUrl: './controle.component.html',
   styleUrl: './controle.component.scss'
 })
-export class ControleComponent {
+export class ControleComponent implements OnInit {
 
-  constructor(private router: Router) {}
+  private _controleService = inject(ControleService);
+  private _router = inject(Router);
+
+  ngOnInit(): void {
+    this._controleService.desativarControleOcular();
+  }
 
   controleOcular():void{
-    this.router.navigate(['/calibragem-olho']);
+    this._controleService.ativarControleOcular();
+    this._router.navigate(['/calibragem-olho']);
   }
 
   controleLuva():void{
@@ -22,9 +29,7 @@ export class ControleComponent {
   }
   
   controleTeclado():void{
-    
+    this._router.navigate(['/jogos', 'teclado']);
   }
-
-
 
 }

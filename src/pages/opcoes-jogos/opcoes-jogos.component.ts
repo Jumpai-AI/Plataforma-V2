@@ -1,18 +1,19 @@
-import { Component, inject, NgZone } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ApplicationRef, Component, inject, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormasComponent } from '../../componentes/formas/formas.component';
+import { FormasComponent } from "../../componentes/formas/formas.component";
 import { BlinkService } from '../../services/blickService.service';
 import { SharedModule } from '../../app/shared/shared.module';
 import { ComunicacaoService } from '../../services/comunicacao.service';
 
 @Component({
-  selector: 'app-dificuldade',
+  selector: 'app-opcoes-jogos',
   standalone: true,
-  imports: [FormasComponent, SharedModule],
-  templateUrl: './dificuldade.component.html',
-  styleUrl: './dificuldade.component.scss'
+  imports: [CommonModule, FormasComponent, SharedModule],
+  templateUrl: './opcoes-jogos.component.html',
+  styleUrl: './opcoes-jogos.component.scss'
 })
-export class DificuldadeComponent {
+export class OpcoesJogosComponent {
 
   private _router = inject(Router);
   private _route = inject(ActivatedRoute);
@@ -24,16 +25,12 @@ export class DificuldadeComponent {
   intervalId: any;
   blinkSubscription: any;
   controle: string | null | undefined;
-  jogo: string | null | undefined;
-
-  totalCards: number = 4;
+  totalCards: number = 3;
 
   ngOnInit(): void {
     this._route.paramMap.subscribe(params => {
       this.controle = params.get('controle');
-      this.jogo = params.get('jogo'); 
     });
-
 
     if (this.controle !== 'teclado') {
       this.startCardSelection();
@@ -78,16 +75,13 @@ export class DificuldadeComponent {
     if (this.selectedCardIndex !== -1) { // Não navega se nenhum card estiver selecionado
       switch (this.selectedCardIndex) {
         case 0:
-          this.facil();
+          this.sistemaSolar();
           break;
         case 1:
-          this.medio();
+          this.numeros();
           break;
         case 2:
-          this.dificil();
-          break;
-        case 3:
-          this.desafio();
+          this.festivalCores();
           break;
         default:
           break;
@@ -95,21 +89,18 @@ export class DificuldadeComponent {
     }
   }
 
+  sistemaSolar(): void {
+    this._router.navigate(['/dificuldade', 'sistema-solar', this.controle]);
+  }
 
-  facil():void{
+  numeros(): void {
     this._comunicacaoService.avisoManutencao();
   }
 
-  medio():void{
+  festivalCores(): void {
     this._comunicacaoService.avisoManutencao();
-  }
-  
-  dificil():void{
-    this._router.navigate([this.jogo, this.controle, 'dificil']);
   }
 
-  desafio():void{
-    this._comunicacaoService.avisoManutencao();
-  }
+
 
 }

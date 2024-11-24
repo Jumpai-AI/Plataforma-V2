@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 60% !important;
+    height: 70% !important;
     gap: 2rem;
 }
 
@@ -25,6 +25,13 @@
         transform: scale(1.1);
         background-color: $amarelo;
     }
+
+    &.selected {
+        transform: scale(1.05);
+        background-color: $amarelo;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
 }
 
 .opcao-controle img {
@@ -44,10 +51,8 @@
     }
   
     p {
-      color:  $branco;
+      color: $branco;
       width: 45%;
       font-size: 1.5rem;
     }
 }
-
-

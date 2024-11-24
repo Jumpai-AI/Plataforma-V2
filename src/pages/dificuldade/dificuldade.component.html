@@ -1,1 +1,20 @@
-<p>dificuldade works!</p>
+<div class="header">
+  <p>Selecione a dificuldade do seu jogo</p>
+</div>
+
+<div class="container">
+  <div class="opcao-controle" [class.selected]="selectedCardIndex === 0" (click)="facil()">
+      <img src="../../assets/image/dificuldade/facil.png" alt="Fase Fácil">
+  </div>
+  <div class="opcao-controle" [class.selected]="selectedCardIndex === 1" (click)="medio()">
+      <img src="../../assets/image/dificuldade/medio.png" alt="Fase Médio">
+  </div>
+  <div class="opcao-controle" [class.selected]="selectedCardIndex === 2" (click)="dificil()">
+      <img src="../../assets/image/dificuldade/dificil.png" alt="Fase difícil">
+  </div>
+  <div class="opcao-controle" [class.selected]="selectedCardIndex === 3" (click)="desafio()">
+    <img src="../../assets/image/dificuldade/desafio.png" alt="Fase Desafio">
+</div>
+</div>
+
+<app-formas></app-formas>

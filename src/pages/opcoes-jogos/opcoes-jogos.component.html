@@ -1,0 +1,28 @@
+<div class="header">
+    <p>Selecione um jogo e descubra um mundo de possibilidade</p>
+</div>
+
+<div class="container">
+    <div class="opcao-controle" [class.selected]="selectedCardIndex === 0" (click)="sistemaSolar()">
+        <img src="../../assets/image/jogos/capa_sistema_solar.png" alt="Jogo Sistema Solar">
+        <h2>VIAGEM ESPACIAL</h2>
+        <p>Nesta fase, você viajará pelo sistema solar em busca dos planetas. Cuidado, podem surgir alguns obstáculos pelo caminho!</p>
+        <button mat-stroked-button class="bnt-branco-roxo W-75">INICIAR</button>
+    </div>
+
+    <div class="opcao-controle" [class.selected]="selectedCardIndex === 1" (click)="numeros()">
+        <img src="../../assets/image/jogos/capa_batalha_numeros.png" alt="Controle Manual">
+        <h2>BATALHA DOS NÚMEROS</h2>
+        <p>Nesta fase, você lutará contra o gigante númerico, resolva as contas para impedi-lo de ganhar. Mas corra, o tempo não pode acabar!</p>
+        <button mat-stroked-button class="bnt-branco-roxo W-75">INICIAR</button>
+    </div>
+
+    <div class="opcao-controle" [class.selected]="selectedCardIndex === 2" (click)="festivalCores()">
+        <img src="../../assets/image/jogos/capa_festival_cores.png" alt="Jogo Festival Cores">
+        <h2>FESTIVAL DAS CORES</h2>
+        <p>Nessa fase, começou uma chuva colorida, sua missão é recolher as cores! Cuidado, não pegue as cores proibidas!</p>
+        <button mat-stroked-button class="bnt-branco-roxo W-75">INICIAR</button>
+    </div>
+</div>
+
+<app-formas></app-formas>

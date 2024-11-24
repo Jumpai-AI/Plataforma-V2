@@ -1,70 +1,66 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BlinkService } from '../../services/piscada.service';
-import { Subscription } from 'rxjs';
-import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, Inject, PLATFORM_ID, inject } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { BlinkService } from '../../services/blickService.service';
 import interact from 'interactjs';
-import { isPlatformBrowser } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-camera',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './camera.component.html',
-  styleUrls: ['./camera.component.css']
+  styleUrl: './camera.component.scss'
 })
 export class CameraComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('videoElement') videoElement!: ElementRef;
   @ViewChild('canvasElement') canvasElement!: ElementRef;
   @ViewChild('containerCamera') containerCamera!: ElementRef;
 
-  private subscription: Subscription | undefined;
-  private blinkSubscription: Subscription | undefined;
-  private intervalSubscription: Subscription | undefined;
+  private assinaturas: Subscription[] = [];
+  private servicoBlink = inject(BlinkService);
+  private plataformaId = inject(PLATFORM_ID);
 
-  constructor(
-    private blinkService: BlinkService,
-    private router: Router,
-    private route: ActivatedRoute,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
-
-  ngOnInit() {}
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    // if (isPlatformBrowser(this.platformId)) {
-    //   setTimeout(() => {
-    //     this.blinkService.initializeFaceMesh(this.videoElement.nativeElement, this.canvasElement.nativeElement)
-    //       .catch((error) => console.error("Erro ao inicializar FaceMesh:", error));
-    //   }, 0);
-    // }
+    if (isPlatformBrowser(this.plataformaId)) {
+      this.iniciarFaceMesh();
+    }
+    this.configurarArrasto();
+  }
 
-    // Configurar o Interact.js
+  ngOnDestroy(): void {
+    this.limparAssinaturas();
+  }
+
+  // Inicializa o FaceMesh usando o serviço Blink
+  private iniciarFaceMesh(): void {
+    setTimeout(() => {
+      this.servicoBlink.initializeFaceMesh(this.videoElement.nativeElement, this.canvasElement.nativeElement)
+        .catch((erro) => console.error('Erro ao inicializar o FaceMesh:', erro));
+    }, 0);
+  }
+
+
+  // Configura a funcionalidade de arrasto usando o interact.js
+  private configurarArrasto(): void {
     interact(this.containerCamera.nativeElement)
-      .draggable({
-        onmove: this.dragMoveListener,
-      });
+      .draggable({ onmove: this.noMovimentoArrasto });
   }
 
-  dragMoveListener(event: any) {
-    const target = event.target;
-    const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-    const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+  // Listener de movimento de arrasto do interact.js
+  private noMovimentoArrasto(event: any): void {
+    const alvo = event.target;
+    const x = (parseFloat(alvo.getAttribute('data-x')) || 0) + event.dx;
+    const y = (parseFloat(alvo.getAttribute('data-y')) || 0) + event.dy;
 
-    target.style.transform = `translate(${x}px, ${y}px)`;
-    target.setAttribute('data-x', x);
-    target.setAttribute('data-y', y);
+    alvo.style.transform = `translate(${x}px, ${y}px)`;
+    alvo.setAttribute('data-x', x);
+    alvo.setAttribute('data-y', y);
   }
 
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-    if (this.blinkSubscription) {
-      this.blinkSubscription.unsubscribe();
-    }
-    if (this.intervalSubscription) {
-      this.intervalSubscription.unsubscribe();
-    }
+  // Limpa todas as assinaturas para evitar vazamentos de memória
+  private limparAssinaturas(): void {
+    this.assinaturas.forEach(sub => sub.unsubscribe());
   }
 }

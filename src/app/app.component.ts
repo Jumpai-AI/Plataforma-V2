@@ -6,9 +6,9 @@ import { CameraComponent } from '../componentes/camera/camera.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TemplateComponent, CameraComponent],
+  imports: [TemplateComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'Plataforma';

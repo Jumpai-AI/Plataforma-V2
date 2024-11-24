@@ -1,18 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { BlinkService } from '../../../services/piscada.service';
-import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { SharedModule } from '../../../app/shared/shared.module';
 
 @Component({
   selector: 'app-calibragem-olho',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIcon],
+  imports: [CommonModule, SharedModule],
   templateUrl: './calibragem-olho.component.html',
   styleUrls: ['./calibragem-olho.component.scss']
 })
-export class CalibragemOlhoComponent {
+export class CalibragemOlhoComponent implements OnDestroy {
   tempoRestante: number = 8; 
   contagem: any;
   calibrando = false;
@@ -23,8 +22,11 @@ export class CalibragemOlhoComponent {
 
   @ViewChild('videoElement', { static: true }) videoElement!: ElementRef<HTMLVideoElement>; 
 
+  // Assinatura da piscada
+  private blinkSubscription: any;
+
   constructor(private blinkService: BlinkService, private router: Router) { 
-    this.blinkService.piscadaDetectada.subscribe(() => {
+    this.blinkSubscription = this.blinkService.piscadaDetectada.subscribe(() => {
       this.circuloCor = 'verde';
       setTimeout(() => {
         this.circuloCor = 'branco';
@@ -63,14 +65,26 @@ export class CalibragemOlhoComponent {
       .then(() => {
         this.calibragemStatus = 'S';
         this.testando = false;
-        setInterval(() => {
-          this.router.navigate(['/jogos']);
-        }, 2000);
+        this.router.navigate(['/jogos', 'ocular']);
       })
       .catch((error) => {
         this.calibragemStatus = 'E';
         this.calibrando = false;
         this.testando = false;      
       });
+  }
+
+  // Função que será chamada quando o componente for destruído
+  ngOnDestroy(): void {
+
+    // Limpa qualquer intervalo que esteja rodando
+    if (this.contagem) {
+      clearInterval(this.contagem);
+    }
+
+    // Desassocia a assinatura de piscada, se houver
+    if (this.blinkSubscription) {
+      this.blinkSubscription.unsubscribe();
+    }
   }
 }

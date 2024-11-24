@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 60% !important;
+    height: 70% !important;
     gap: 2rem;
 }
 
@@ -12,9 +12,12 @@
     z-index: 2; 
     flex: 1 1 200px;
     max-width: 20%;
-    aspect-ratio: 1;
+    aspect-ratio: 1.15 / 1.5;
+    flex-direction: column;  
+    justify-content: space-around; 
     background-color: $branco;
     display: flex;
+    padding: 15px;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
@@ -24,11 +27,30 @@
     &:hover {
         transform: scale(1.1);
         background-color: $amarelo;
+
+        .bnt-branco-roxo { 
+            background-color: $roxo !important;
+            color:$branco  !important;
+        }
     }
+
+    &.selected {
+        transform: scale(1.05);
+        background-color: $amarelo;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+        
+        .bnt-branco-roxo { 
+            background-color: $roxo !important;
+            color:$branco  !important;
+        }
+    }
+    
 }
 
 .opcao-controle img {
-    width: 50%;
+    width: 95%;
+    border-radius: 10px;
     height: auto;
     object-fit: contain; 
 }
