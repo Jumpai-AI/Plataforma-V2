@@ -96,14 +96,22 @@ export class DificuldadeComponent {
   }
 
 
-  facil():void{
+  /* facil():void{
     this._comunicacaoService.avisoManutencao();
   }
 
   medio():void{
     this._comunicacaoService.avisoManutencao();
-  }
+  } */
   
+  facil():void{
+    this._router.navigate([this.jogo, this.controle, 'facil']);
+  }
+
+  medio():void{
+    this._router.navigate([this.jogo, this.controle, 'medio']);
+  }
+    
   dificil():void{
     this._router.navigate([this.jogo, this.controle, 'dificil']);
   }
