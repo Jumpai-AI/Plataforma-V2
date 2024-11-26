@@ -107,22 +107,14 @@ export class DificuldadeComponent {
   }
 
 
-  /* facil():void{
-    this._comunicacaoService.avisoManutencao();
-  }
-
-  medio():void{
-    this._comunicacaoService.avisoManutencao();
-  } */
-  
   facil():void{
-    this._router.navigate([this.jogo, this.controle, 'facil']);
+    this._comunicacaoService.avisoManutencao();
   }
 
   medio():void{
-    this._router.navigate([this.jogo, this.controle, 'medio']);
+    this._comunicacaoService.avisoManutencao();
   }
-    
+  
   dificil():void{
     this._router.navigate([this.jogo, this.controle, 'dificil']);
   }
