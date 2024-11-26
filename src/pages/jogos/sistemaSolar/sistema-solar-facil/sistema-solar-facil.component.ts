@@ -5,6 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ComunicacaoService } from '../../../../services/comunicacao.service';
 import { BlinkService } from '../../../../services/blickService.service';
+import { LuvaService } from '../../../../services/luva.service';
 
 @Component({
   selector: 'app-sistema-solar-facil',
@@ -58,7 +59,10 @@ export class SistemaSolarFacilComponent {
   acao: boolean = false;
   controle: string | null | undefined;
   jogo: string | null | undefined;
+  
   private _blinkService = inject(BlinkService);
+  private _luvaService = inject(LuvaService);
+
   blinkSubscription: any;
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -81,18 +85,35 @@ export class SistemaSolarFacilComponent {
   
       if (this.controle !== 'teclado') {
   
-        this.blinkSubscription = this._blinkService.blinkDetected.subscribe(() => {
-          if (!this.acao) {
-            this.subir();
-            this.acao = true;
-          } else {
-            this.descer();
-            this.acao = false;
-          }
-        
-        });
-      }
+        if(this.controle == 'ocular'){
+          this.blinkSubscription = this._blinkService.blinkDetected.subscribe(() => {
+            if (!this.acao) {
+              this.subir();
+              this.acao = true;
+            } else {
+              this.descer();
+              this.acao = false;
+            }
+          });  
+        }
   
+        if(this.controle == 'manual'){
+          this.blinkSubscription = this._luvaService.movimentoDetectado.subscribe(() => {
+            if (!this.acao) {
+              this.subir();
+              this.acao = true;
+            } else {
+              this.descer();
+              this.acao = false;
+            }
+          
+          });
+  
+        }
+
+        
+      }
+    
       this.botaoPopupVitoria?.addEventListener('click', () => this.hidePopup());
       this.botaoTentarNovamente?.addEventListener('click', () => this.hidePopup());
       this.botaoSair?.addEventListener('click', () => this.goToHome());
