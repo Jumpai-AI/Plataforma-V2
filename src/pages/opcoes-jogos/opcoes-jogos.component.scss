@@ -1,55 +1,38 @@
 @import '../../cores.scss';
-
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 70% !important;
-    gap: 1.5rem;
-
-    h2{
-        font-size: 120%;
-    }
-
-    p{
-        font-size: 90%;
-        padding: 2%;
-    }
+    gap: 2rem;
 }
-
 .opcao-controle {
     z-index: 2; 
     flex: 1 1 200px;
     max-width: 20%;
-    height: 100%;
     aspect-ratio: 1.15 / 1.5;
     flex-direction: column;  
     justify-content: space-around; 
     background-color: $branco;
     display: flex;
-    padding: 1%;
+    padding: 15px;
     justify-content: center;
     align-items: center;
-    border-radius: 15px;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    text-align: center;
-
     &:hover {
         transform: scale(1.1);
         background-color: $amarelo;
-
         .bnt-branco-roxo { 
             background-color: $roxo !important;
             color:$branco  !important;
         }
     }
-
     &.selected {
         transform: scale(1.05);
         background-color: $amarelo;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-
         
         .bnt-branco-roxo { 
             background-color: $roxo !important;
@@ -58,11 +41,10 @@
     }
     
 }
-
 .opcao-controle img {
     width: 95%;
+    border-radius: 10px;
     height: auto;
-    border-radius: 15px;
     object-fit: contain; 
 }
   
@@ -71,16 +53,14 @@
     text-align: left;
     color:  $amarelo;
   
-    /*h1 {
+    h1 {
       font-weight: bold;
       margin-bottom: 0.5rem;
-    }*/
+    }
   
     p {
       color:  $branco;
       width: 45%;
-      font-size: 150%;
+      font-size: 1.5rem;
     }
 }
-
-
