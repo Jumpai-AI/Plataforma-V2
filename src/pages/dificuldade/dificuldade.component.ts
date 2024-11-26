@@ -4,6 +4,7 @@ import { FormasComponent } from '../../componentes/formas/formas.component';
 import { BlinkService } from '../../services/blickService.service';
 import { SharedModule } from '../../app/shared/shared.module';
 import { ComunicacaoService } from '../../services/comunicacao.service';
+import { LuvaService } from '../../services/luva.service';
 
 @Component({
   selector: 'app-dificuldade',
@@ -17,6 +18,8 @@ export class DificuldadeComponent {
   private _router = inject(Router);
   private _route = inject(ActivatedRoute);
   private _blinkService = inject(BlinkService);
+  private _luvaService = inject(LuvaService);
+
   private _comunicacaoService = inject(ComunicacaoService);
   private ngZone = inject(NgZone);
 
@@ -38,9 +41,17 @@ export class DificuldadeComponent {
     if (this.controle !== 'teclado') {
       this.startCardSelection();
 
-      this.blinkSubscription = this._blinkService.blinkDetected.subscribe(() => {
-        this.selectCardOnBlink();
-      });
+      if(this.controle == 'ocular'){
+        this.blinkSubscription = this._blinkService.blinkDetected.subscribe(() => {
+          this.selectCardOnBlink();
+        });
+      }
+
+      if(this.controle == 'manual'){
+        this.blinkSubscription = this._luvaService.movimentoDetectado.subscribe(() => {
+          this.selectCardOnBlink();
+        });  
+      }
     }
 
 

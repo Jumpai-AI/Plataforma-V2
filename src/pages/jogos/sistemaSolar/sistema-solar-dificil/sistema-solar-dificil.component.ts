@@ -4,6 +4,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ComunicacaoService } from '../../../../services/comunicacao.service';
 import { BlinkService } from '../../../../services/blickService.service';
+import { LuvaService } from '../../../../services/luva.service';
 
 @Component({
   selector: 'app-sistema-solar-dificil',
@@ -68,6 +69,8 @@ export class SistemaSolarDificilComponent {
   jogo: string | null | undefined;
 
   private _blinkService = inject(BlinkService);
+  private _luvaService = inject(LuvaService);
+
   blinkSubscription: any;
 
 
@@ -94,16 +97,33 @@ export class SistemaSolarDificilComponent {
   
       if (this.controle !== 'teclado') {
   
-        this.blinkSubscription = this._blinkService.blinkDetected.subscribe(() => {
-          if (!this.acao) {
-            this.subir();
-            this.acao = true;
-          } else {
-            this.descer();
-            this.acao = false;
-          }
+        if(this.controle == 'ocular'){
+          this.blinkSubscription = this._blinkService.blinkDetected.subscribe(() => {
+            if (!this.acao) {
+              this.subir();
+              this.acao = true;
+            } else {
+              this.descer();
+              this.acao = false;
+            }
+          });  
+        }
+  
+        if(this.controle == 'manual'){
+          this.blinkSubscription = this._luvaService.movimentoDetectado.subscribe(() => {
+            if (!this.acao) {
+              this.subir();
+              this.acao = true;
+            } else {
+              this.descer();
+              this.acao = false;
+            }
+          
+          });
+  
+        }
+
         
-        });
       }
   
       this.botaoPopupVitoria?.addEventListener('click', () => this.hidePopup());

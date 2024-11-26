@@ -6,10 +6,12 @@ import { ControleComponent } from '../pages/controle/controle.component';
 import { SistemaSolarFacilComponent } from '../pages/jogos/sistemaSolar/sistema-solar-facil/sistema-solar-facil.component';
 import { SistemaSolarMedioComponent } from '../pages/jogos/sistemaSolar/sistema-solar-medio/sistema-solar-medio.component';
 import { SistemaSolarDificilComponent } from '../pages/jogos/sistemaSolar/sistema-solar-dificil/sistema-solar-dificil.component';
+import { CalibragemLuvaComponent } from '../pages/calibragem/calibragem-luva/calibragem-luva.component';
 
 export const routes: Routes = [
     { path: '', component: ControleComponent },
     { path: 'calibragem-olho', component: CalibragemOlhoComponent },
+    { path: 'calibragem-luva', component: CalibragemLuvaComponent },
     { path: 'jogos/:controle', component: OpcoesJogosComponent},
     { path: 'dificuldade/:jogo/:controle', component: DificuldadeComponent},
     {
